@@ -21,7 +21,7 @@ Sigue estos pasos para configurar y ejecutar el proyecto:
 
 4. **Entrenar el modelo de Machine Learning**
      ```bash
-     python train.model.py
+     python trainmodel.py
      ```
 
 5. **Ejecutar el bot**
