@@ -28,3 +28,5 @@ Sigue estos pasos para configurar y ejecutar el proyecto:
      ```bash
      python telegrambot.py
      ```
+
+![Screenshot](https://i.imgur.com/p5zt0Dm.jpeg)
