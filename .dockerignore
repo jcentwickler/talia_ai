@@ -1,1 +1,3 @@
 .gitignore
+.knowledgebase.db
+talia_ai_model.pkl
