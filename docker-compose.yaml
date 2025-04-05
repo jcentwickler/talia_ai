@@ -1,0 +1,10 @@
+services:
+  talia-ai:
+    container_name: 'talia_ai'
+    build: .
+    volumes:
+      - './TaliaAI/main/:/app'
+    network_mode: host
+    tty: true
+    stdin_open: true
+
