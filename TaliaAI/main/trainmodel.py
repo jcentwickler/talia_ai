@@ -16,8 +16,7 @@ labels = [row[1] for row in rows]
 conn.close()
 
 model = Pipeline([
-    ("tfidf", TfidfVectorizer(tokenizer=nltk_tokenizer)),
-    ("clf", LogisticRegression())
+    ("tfidf", TfidfVectorizer(tokenizer=nltk_tokenizer))
 ])
 
 model.fit(texts, labels)

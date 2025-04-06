@@ -48,7 +48,7 @@ def nltk_tokenizer(text):
 
 def extract_text_to_translate(user_input):
     tokens = word_tokenize(user_input.lower())
-    filtered_tokens = [w for w in tokens if w not in SUPPORTED_LANGUAGES.keys() and w not in ["traduce", "traducir", "a", "en", "cómo", "se", "dice"]]
+    filtered_tokens = [w for w in tokens if w not in SUPPORTED_LANGUAGES.keys() and w not in ["traduce", "traducir", "traducirme", "a", "en", "cómo", "se", "dice", "texto", "palabra"]]
     return " ".join(filtered_tokens)
 
 def extract_target_language(user_input):

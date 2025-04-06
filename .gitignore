@@ -1,6 +1,8 @@
 .env
 TaliaAI/practicas y ejemplos/
 TaliaAI/main/__pycache__/
+.knowledgebase.db
+.pkl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
