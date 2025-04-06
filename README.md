@@ -1,10 +1,9 @@
-# Instalación
-
-**Requerimientos**
+# Requerimientos
 - Python<=[3.11.11](https://www.python.org/downloads/release/python-31111)
 - [git](https://git-scm.com/downloads)
 - [Docker](https://www.docker.com/products/docker-desktop/) (Opcional)
-  
+
+# Instalación
 Sigue estos pasos para configurar y ejecutar el proyecto:
 
 1. **Clonar el repositorio**
@@ -16,7 +15,7 @@ Sigue estos pasos para configurar y ejecutar el proyecto:
 
 3. **Crear el archivo `.env`**
 
-   Crea un archivo`.env` en el directorio raiz y agrega la siguiente entrada:
+   Crea un archivo`.env` en el directorio source y agrega la siguiente entrada:
      ```
      TELEGRAM_API_TOKEN=<TOKEN>
      ```
