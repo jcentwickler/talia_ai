@@ -3,7 +3,7 @@ services:
     container_name: 'talia_ai'
     build: .
     volumes:
-      - './TaliaAI/main/:/app'
+      - './source/:/app'
     network_mode: host
     tty: true
     stdin_open: true
