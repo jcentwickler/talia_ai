@@ -1,5 +1,8 @@
 # Instalación
 
+**Requerimientos**
+- Python<=3.11.11
+  
 Sigue estos pasos para configurar y ejecutar el proyecto:
 
 1. **Crear el archivo `.env`**
@@ -16,17 +19,19 @@ Sigue estos pasos para configurar y ejecutar el proyecto:
 
 3. **Crear la base de conocimientos en SQLite**
      ```bash
-     python createdb.py
+     python ./main/createdb.py
      ```
 
 4. **Entrenar el modelo de Machine Learning**
      ```bash
-     python trainmodel.py
+     python ./main/trainmodel.py
      ```
 
 5. **Ejecutar el bot**
      ```bash
-     python telegrambot.py
+     python ./main/telegrambot.py
      ```
+
 Usuario en telegram: @TaliaAI_bot
+
 ![Screenshot](https://i.imgur.com/p5zt0Dm.jpeg)
