@@ -5,6 +5,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from utils import nltk_tokenizer
 from nltk.corpus import stopwords
+import nltk
 
 nltk.download('punkt')
 nltk.download('stopwords')
