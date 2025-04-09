@@ -1,17 +1,11 @@
-## utils.py
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize, sent_tokenize
 from googletrans import Translator
 
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('wordnet')
-nltk.download('punkt_tab')
-
 lemmatizer = WordNetLemmatizer()
-stop_words = set(stopwords.words("spanish"))
+stop_words_es = stopwords.words("spanish")
 
 SUPPORTED_LANGUAGES = {
     "ingles": "en",
@@ -44,21 +38,21 @@ RESPUESTAS_TRADUCCION = [
 
 def nltk_tokenizer(text):
     tokens = word_tokenize(text.lower())
-    return [lemmatizer.lemmatize(w) for w in tokens if w.isalpha() and w not in stop_words]
+    return [lemmatizer.lemmatize(w) for w in tokens if w.isalpha() and w not in stop_words_es]
 
 def extract_text_to_translate(user_input):
     tokens = word_tokenize(user_input.lower())
-    filtered_tokens = [w for w in tokens if w not in SUPPORTED_LANGUAGES.keys() and w not in ["traduce", "traducir", "traducirme", "a", "en", "cómo", "se", "dice", "texto", "palabra"]]
+    filtered_tokens = [word for word in tokens if word not in SUPPORTED_LANGUAGES.keys() and word not in ["traduce", "traducir", "traducirme", "traduceme", "a", "en", "cómo", "se", "dice", "texto", "palabra"]]
     return " ".join(filtered_tokens)
 
 def extract_target_language(user_input):
     user_input_lower = user_input.lower()
     for name, code in SUPPORTED_LANGUAGES.items():
         if name in user_input_lower:
-            return code
+            return [name, code]
     return None
 
-def translate_text(text, target_language="es"):
+def translate_text(text, target_language):
     translator = Translator()
     translated = translator.translate(text, dest=target_language)
     return translated.text

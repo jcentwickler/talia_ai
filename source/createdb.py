@@ -1,6 +1,3 @@
-#!/usr/bin/python
-#Crear base de conocimientos
-
 import sqlite3
 con = sqlite3.connect("knowledgebase.db")
 cur = con.cursor()
