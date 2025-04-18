@@ -4,7 +4,8 @@
 #pandas==2.2.3
 #numpy==2.2.3
 nltk==3.9.1 
-googletrans==4.0.0-rc1
 scikit_learn==1.6.1
 pyTelegramBotAPI==4.26.0
 python-dotenv==1.1.0
+gpytranslate==2.0.0
+openai==1.75.0
