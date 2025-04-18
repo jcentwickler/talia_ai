@@ -2,7 +2,16 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize, sent_tokenize
-from googletrans import Translator
+from gpytranslate import SyncTranslator
+from openai import OpenAI
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+nltk.download('stopwords')
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 lemmatizer = WordNetLemmatizer()
 stop_words_es = stopwords.words("spanish")
@@ -41,9 +50,14 @@ def nltk_tokenizer(text):
     return [lemmatizer.lemmatize(w) for w in tokens if w.isalpha() and w not in stop_words_es]
 
 def extract_text_to_translate(user_input):
-    tokens = word_tokenize(user_input.lower())
-    filtered_tokens = [word for word in tokens if word not in SUPPORTED_LANGUAGES.keys() and word not in ["traduce", "traducir", "traducirme", "traduceme", "a", "en", "cómo", "se", "dice", "texto", "palabra"]]
-    return " ".join(filtered_tokens)
+    completion = client.chat.completions.create(
+        model="gpt-4.1-nano",
+        store=True,
+        messages=[{"role": "user", "content": (f'Extrae únicamente el texto que el usuario desea traducir.\n'
+        f'Devuelve **solo** la frase o palabra a traducir, **sin comillas, sin explicaciones y sin texto adicional, tal y como esta y sin traducir**.\n'
+        f'Usuario: {user_input}')}
+        ])
+    return completion.choices[0].message.content
 
 def extract_target_language(user_input):
     user_input_lower = user_input.lower()
@@ -53,6 +67,6 @@ def extract_target_language(user_input):
     return None
 
 def translate_text(text, target_language):
-    translator = Translator()
-    translated = translator.translate(text, dest=target_language)
-    return translated.text
+    translator = SyncTranslator()
+    translation = translator.translate(text, dest=target_language)    
+    return translation.text
