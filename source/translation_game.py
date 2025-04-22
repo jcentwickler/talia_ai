@@ -66,12 +66,10 @@ Para cada traducción, sigue este formato:
 - Dale formato al texto utilizando HTML en cumplimiento con las especificaciones y etiquetas que soporta el API de telegram.
 """
 
-# Database connection and sentence fetching
 def get_sentence(difficulty, language_pair):
     conn = sqlite3.connect('game.db')
     cursor = conn.cursor()
     
-    # Determine the language based on the language pair
     if language_pair == "es-en":
         language = "spanish"
     elif language_pair == "en-es":
@@ -79,19 +77,16 @@ def get_sentence(difficulty, language_pair):
     else:
         return None, None
     
-    # Query the database for sentences based on difficulty and language
     query = "SELECT sentence FROM sentences WHERE difficulty = ? AND language = ?"
     cursor.execute(query, (difficulty, language))
     sentences = cursor.fetchall()
     conn.close()
 
     if sentences:
-        return random.choice(sentences)[0]  # Return a random sentence from the result
+        return random.choice(sentences)[0]
     else:
         return None
 
-
-# Function to evaluate the user's translation
 def evaluate_translation(sentence, user_translation):
     prompt = f"Oración Original: {sentence}\n" \
              f"Traducción del Usuario: {user_translation}\n"
@@ -110,7 +105,6 @@ def evaluate_translation(sentence, user_translation):
     result = response.choices[0].message.content.strip()
     return result
 
-# --- Handlers ---
 def register_handlers(bot):
 
     @bot.message_handler(commands=['play'])
@@ -172,5 +166,5 @@ def register_handlers(bot):
             parse_mode="HTML"
         )
 
-        del user_sessions[user_id]  # Clear session
+        del user_sessions[user_id]
         bot.send_message(message.chat.id, "¡Gracias por jugar! Usa /play para intentarlo de nuevo.")
