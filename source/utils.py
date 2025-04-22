@@ -78,12 +78,13 @@ def define_word(word):
     number=1
     synsets = wn.synsets(word)
     definitions = []
+    message = f"¡Claro! Es posible que «{word}» tenga varios significados. Si quieres una definición más precisa, por favor proporciona el contexto en el que se usa.\n\n"
 
     if len(synsets) > 0:
         for syn in synsets[:top_n]:
-            definitions.append(f"Definición {number}: {syn.definition()}\n")
+            definitions.append(f"Definición [en] {number}: {syn.definition()}\n")
             number+=1
-        return "\n".join(definitions)
+        return message + "\n".join(definitions)
     else:
         request = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}")
         if request.status_code == 200:
@@ -94,8 +95,9 @@ def define_word(word):
             for n in range(max_definitions):
                 definitions.append(f"Definición {number}: {data[0]['meanings'][0]['definitions'][n]['definition']}\n")
                 number += 1
-
-    return "\n".join(definitions)
+            return message + "\n".join(definitions)
+        else:
+            return "No se encontró una definición para la palabra o termino. Asegúrate de que esté escrita en inglés y sin errores gramaticales."
 
 
 def define_word_by_context(context, word):

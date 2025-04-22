@@ -10,13 +10,13 @@ load_dotenv()
 user_states = {"neutral": True}
 
 model = joblib.load("talia_ai_model.pkl")
+replyModel = joblib.load("reply_classifier.pkl")
 
 API_TOKEN = os.getenv("TELEGRAM_API_TOKEN")
 bot = telebot.TeleBot(API_TOKEN)
 
 def define_word_without_context(message, word) -> None:
-    bot.reply_to(message, f"¡Claro! Es posible que «{word}» tenga varios significados. Si quieres una definición más precisa, por favor proporciona el contexto en el que se usa.\n"
-                f"\n{define_word(word)}")
+    bot.reply_to(message, f"\n{define_word(word)}")
 
 def ask_define_word_without_context(message) -> None:
      word = user_states["definir_sin_contexto"][0]
@@ -37,11 +37,14 @@ def classify_message(message):
     if user_states["neutral"]:
         user_input = message.text
         predicted_label = model.predict([user_input])[0]
+        full_language = None
+        target_language = None
 
         if predicted_label == "translate":
             language = extract_target_language(user_input)
-            full_language = language[0]
-            target_language = language[1]
+            if language and len(language) > 2:
+                full_language = language[0]
+                target_language = language[1]
             if target_language:
                 text_to_translate = extract_text_to_translate(user_input)
                 if text_to_translate:
@@ -79,10 +82,11 @@ def classify_message(message):
             bot.reply_to(message, f"Intención: {predicted_label}")
     else:
         user_input = message.text
-        if user_input in ["ok", "si", "esta bien", "claro", "por favor"]:
+        predicted_reply = replyModel.predict([user_input])[0]
+        if  predicted_reply == "affirmative":
             if user_states["definir_sin_contexto"][1]:
                 ask_define_word_without_context(message) 
-        elif user_input in ["no", "no gracias"]:
+        elif  predicted_reply == "negative":
             bot.reply_to(message, "¡Esta bien!. 👍 Si necesitas algo mas no dudes en mencionarlo")
             user_states["neutral"] = True
         else: 
