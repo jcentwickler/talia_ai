@@ -10,6 +10,8 @@ from dotenv import load_dotenv
 from pywsd.lesk import adapted_lesk
 from nltk.corpus import wordnet as wn
 from nltk import pos_tag
+from pathlib import Path
+from datetime import datetime
 
 load_dotenv()
 
@@ -72,6 +74,21 @@ def extract_word_to_define(user_input):
         )}]
 )
         return completion.choices[0].message.content.splitlines()
+
+def extract_text_to_read(user_input):
+    completion = client.chat.completions.create(
+        model="gpt-4.1-nano",
+        store=True,
+        messages = [{
+        "role": "user",
+        "content": (
+        f'Extrae únicamente el texto que el usuario desea que sea leído en voz alta o mediante TTS.\n'
+        f'Devuelve exclusivamente esa frase, palabra o texto **sin comillas, sin explicaciones, sin etiquetas, y sin ningún añadido**.\n'
+        f'Mantén el texto extraido exactamente como fue escrito por el usuario, incluyendo mayúsculas, puntuación y formato.\n'
+        f'Usuario: {user_input}'
+    )
+}])
+    return completion.choices[0].message.content
 
 def define_word(word):
     top_n=3
@@ -149,3 +166,20 @@ def translate_text(text, target_language):
     translator = SyncTranslator()
     translation = translator.translate(text, targetlang=target_language)    
     return translation.text
+
+def text_to_speech(text, bot, message): 
+    text_to_read = extract_text_to_read(text)
+
+    speech_path = Path(f"TTS \"{datetime.today().strftime('%Y-%m-%d %H-%M-%S')}\"...")
+    with client.audio.speech.with_streaming_response.create(
+        model="gpt-4o-mini-tts",
+        voice="alloy",
+        input=text_to_read,
+        response_format="mp3"
+    ) as response:
+        response.stream_to_file(speech_path)
+
+    with open(speech_path, "rb") as audio:
+        bot.send_audio(message.chat.id, audio)
+    os.remove(speech_path)
+

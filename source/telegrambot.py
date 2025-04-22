@@ -78,8 +78,8 @@ def classify_message(message):
             else:
                 word = extract_word_to_define(user_input)[0]
                 define_word_without_context(message, word)
-        else:
-            bot.reply_to(message, f"Intención: {predicted_label}")
+        elif predicted_label == "tts":
+            text_to_speech(user_input, bot, message)
     else:
         user_input = message.text
         predicted_reply = replyModel.predict([user_input])[0]
