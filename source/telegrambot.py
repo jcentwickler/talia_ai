@@ -6,6 +6,7 @@ import os
 from utils import *
 from dotenv import load_dotenv
 load_dotenv()
+from translation_game import register_handlers
 
 user_states = {"neutral": True}
 
@@ -32,6 +33,8 @@ def handle_welcome_command(message):
 def handle_code_command(message):
     bot.reply_to(message, "https://github.com/jcentwickler/talia_ai/tree/main")
 
+register_handlers(bot)
+
 @bot.message_handler(func=lambda message: True)
 def classify_message(message):
     if user_states["neutral"]:
@@ -42,7 +45,7 @@ def classify_message(message):
 
         if predicted_label == "translate":
             language = extract_target_language(user_input)
-            if language and len(language) > 2:
+            if language and len(language) > 1:
                 full_language = language[0]
                 target_language = language[1]
             if target_language:
@@ -92,7 +95,7 @@ def classify_message(message):
         else: 
             bot.reply_to(message, "No entiendo tu respuesta, intentalo denuevo 😔")
 
-
-print("Bot en ejecución...")
-bot.infinity_polling()
+if __name__ == "__main__":
+    print("Bot en ejecución...")
+    bot.infinity_polling()
 
