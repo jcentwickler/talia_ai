@@ -7,10 +7,6 @@ from utils import nltk_tokenizer
 from nltk.corpus import stopwords
 import nltk
 
-nltk.download('punkt')
-nltk.download('wordnet')
-nltk.download('punkt_tab')
-
 conn = sqlite3.connect('knowledgebase.db')
 cursor: cursor = conn.cursor()
 cursor.execute("SELECT sentence, intent FROM user_intents")
