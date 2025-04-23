@@ -3,7 +3,6 @@ import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
-from utils import nltk_tokenizer
 from nltk.corpus import stopwords
 import nltk
 
@@ -20,7 +19,7 @@ conn.close()
 stop_words_es = stopwords.words("spanish")
 
 model = Pipeline([
-    ("tfidf", TfidfVectorizer(tokenizer=nltk_tokenizer, stop_words=stop_words_es)),
+    ("tfidf", TfidfVectorizer(stop_words=stop_words_es)),
     ('clf', LogisticRegression(max_iter=10000))
 ])
 
@@ -55,8 +54,8 @@ y = [
 ]
 
 pipeline = Pipeline([
-    ("tfidf", TfidfVectorizer(ngram_range=(1, 2))),
-    ("clf", LogisticRegression())
+    ("tfidf", TfidfVectorizer(stop_words=stop_words_es, ngram_range=(1, 2))),
+    ("clf", LogisticRegression(max_iter=10000))
 ])
 
 pipeline.fit(X, y)
