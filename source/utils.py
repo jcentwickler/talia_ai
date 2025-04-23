@@ -16,12 +16,6 @@ from datetime import datetime
 
 load_dotenv()
 
-nltk.download('stopwords')
-nltk.download('punkt_tab')
-nltk.download('wordnet')
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
-
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=OPENAI_API_KEY)
 

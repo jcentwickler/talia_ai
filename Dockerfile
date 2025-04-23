@@ -4,5 +4,4 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY ./source .
-CMD ["sh", "-c", "python createdb.py && python trainmodel.py && python telegrambot.py"]
-#CMD ["tail", "-f", "/dev/null"]
+CMD ["sh", "-c", "python createdb.py && python creategamedb.py && python trainmodel.py && python telegrambot.py"]
