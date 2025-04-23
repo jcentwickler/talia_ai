@@ -114,7 +114,12 @@ def register_handlers(bot):
             InlineKeyboardButton("Español a Inglés", callback_data="lang_es-en"),
             InlineKeyboardButton("Inglés a Español", callback_data="lang_en-es")
         )
-        bot.send_message(message.chat.id, "Elige el idioma de traducción:", reply_markup=markup)
+        bot.send_message(message.chat.id, """
+        <b>¡Bienvenido al juego de traducciones!</b>
+Por favor, elige el modo de juego:
+        
+        
+        """, reply_markup=markup, parse_mode="HTML")
 
 
     @bot.callback_query_handler(func=lambda call: call.data.startswith('lang_'))

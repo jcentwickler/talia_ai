@@ -27,7 +27,32 @@ def ask_define_word_without_context(message) -> None:
 
 @bot.message_handler(commands=['start'])
 def handle_welcome_command(message):
-    bot.reply_to(message, "Hi")
+    bot.reply_to(message,"""
+👋 ¡Bienvenido a <b>Talia_AI</b>, tu bot para aprender inglés.!
+
+<b>Las funciones que actualmente tiene son:</b>
+
+<b>1. Traducción</b> de inglés a español y español a inglés.
+<b>2. Definición</b> de palabras en inglés con y sin contexto.
+<b>3. Síntesis de voz</b> en inglés.
+<b>4. Juego de traducción</b> con tres niveles de dificultad.
+
+El bot cuenta con procesamiento de lenguaje natural, así que para pedirle algo, simplemente debes decírselo como si estuvieras hablando con una persona.
+
+<b>Ejemplos de comandos:</b>
+
+- <i>Hola Talia_AI, por favor traduce "I want to go shopping" al español</i>
+- <i>¿Qué significa la palabra "embarrassing"?</i>
+- <i>¿Puedes leer esta oración? Early to bed, early to rise makes a man healthy, wealthy, and wise.</i>
+
+- Usa el comando /play para jugar el juego de traducción.
+- Usa el comand /help si necesitas mas ayuda.
+- Usa el comando /code para ver el repositorio de github con el codigo de este proyecto.
+
+¡Espero que disfrutes aprendiendo con Talia_AI! 🚀
+
+    """, parse_mode="HTML")
+
 
 @bot.message_handler(commands=['code'])
 def handle_code_command(message):

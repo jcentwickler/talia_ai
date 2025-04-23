@@ -1,6 +1,7 @@
 import nltk
 import os
 import requests
+import re
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize, sent_tokenize
@@ -183,3 +184,6 @@ def text_to_speech(text, bot, message):
         bot.send_audio(message.chat.id, audio)
     os.remove(speech_path)
 
+def escape_markdown_v2(text):
+    markdown_special_chars = r'([_*\[\]()~`>#+\-=|{}.!])'
+    return re.sub(markdown_special_chars, r'\\\1', text)
