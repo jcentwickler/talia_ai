@@ -218,10 +218,9 @@ if not table_exists:
     ('¿Puedes repetirlo de nuevo en voz alta?', 'tts'),
     ('¿Podrías hablar esto en voz alta?', 'tts'),
     ('¿Puedes decir esta frase con claridad?', 'tts'),
-    ('Quiero oír esto en voz alta.', 'tts')
+    ('Quiero oír esto en voz alta.', 'tts'),
     ('Leeme esta palabra', 'tts'),
-    ('Leeme esta texto', 'tts'),
-    ;""")
+    ('Leeme esta texto', 'tts');""")
 
 
     cur.execute("""INSERT INTO user_intents (sentence, intent) VALUES
