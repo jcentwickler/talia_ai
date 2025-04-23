@@ -5,7 +5,7 @@ check_python_version() {
     current_version=$(python --version 2>&1 | awk '{print $2}')
     
     if [[ "$current_version" == "$required_version" ]]; then
-        echo "Python $required_version is already in use. Proceeding..."
+        echo "Python $required_version ya esta en uso. Procediendo..."
         return 0
     fi
 
