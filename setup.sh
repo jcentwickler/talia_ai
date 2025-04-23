@@ -21,7 +21,7 @@ if [ $? -eq 0 ]; then
         python createdb.py
         python creategamedb.py
         python trainmodel.py
-        echo "Instalado con python 3.11.11 $required_version..."
+        echo "Instalado con python $required_version..."
         exit 0
 else
 
