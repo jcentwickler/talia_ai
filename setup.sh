@@ -14,19 +14,27 @@ check_python_version() {
 
 check_python_version
 if [ $? -eq 0 ]; then
-
-    echo "Instalado con python 3.11.11 $required_version..."
+        python -m venv source/.venv
+        source source/.venv/bin/activate
+        pip install -r requirements.txt
+        cd source
+        python createdb.py
+        python creategamedb.py
+        python trainmodel.py
+        echo "Instalado con python 3.11.11 $required_version..."
+        exit 0
 else
 
     echo "La version global de python no es $required_version. Intentando con python3.11..."
 
     if command -v python3.11 > /dev/null 2>&1; then
         python3.11 -m venv .venv
-        source .venv/bin/activate
+        source source/.venv/bin/activate
         pip install -r requirements.txt
-        python ./source/createdb.py
-        python ./source/creategamedb.py
-        python ./source/trainmodel.py
+        cd source
+        python createdb.py
+        python creategamedb.py
+        python trainmodel.py
         exit 0
     fi
 
@@ -37,12 +45,13 @@ else
         if command -v pyenv-win > /dev/null 2>&1; then
             pyenv-win install 3.11.11
             pyenv-win global 3.11.11
-            python -m venv .venv
-            source .venv/Scripts/activate 
+            python -m venv source/.venv
+            source source/.venv/Scripts/activate 
             pip install -r requirements.txt
-            python ./source/createdb.py
-            python ./source/creategamedb.py
-            python ./source/trainmodel.py
+            cd source
+            python createdb.py
+            python creategamedb.py
+            python trainmodel.py
             exit 0
         else
             echo "pyenv-win no fue encontrado. Por favor instalarlo o asegurarse que python 3.11.11 este disponible"
@@ -55,12 +64,13 @@ else
         if command -v pyenv > /dev/null 2>&1; then
             pyenv install 3.11.11
             pyenv global 3.11.11
-            python -m venv .venv
-            source .venv/bin/activate
+            python -m venv source/.venv
+            source source/.venv/bin/activate
             pip install -r requirements.txt
-            python ./source/createdb.py
-            python ./source/creategamedb.py
-            python ./source/trainmodel.py
+            cd source
+            python createdb.py
+            python creategamedb.py
+            python trainmodel.py
             exit 0
         else
             echo "pyenv no fue encontrado. Por favor instalarlo o asegurarse que python 3.11.11 este disponible"
